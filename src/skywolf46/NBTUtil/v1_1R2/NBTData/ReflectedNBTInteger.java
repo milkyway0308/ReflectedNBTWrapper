@@ -1,24 +1,24 @@
-package skywolf46.NBTUtil.v1_1R1.NBTData;
+package skywolf46.NBTUtil.v1_1R2.NBTData;
 
-import skywolf46.NBTUtil.v1_1R1.BukkitVersionUtil;
-import skywolf46.NBTUtil.v1_1R1.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_1R2.BukkitVersionUtil;
+import skywolf46.NBTUtil.v1_1R2.Interface.IReflectedNBTBase;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
-public class ReflectedNBTFloat implements IReflectedNBTBase<Float> {
-    private float d;
+public class ReflectedNBTInteger implements IReflectedNBTBase<Integer> {
+    private int d;
     private static Class NBT_CLASS;
     private static Constructor NBT_CONSTRUCTOR;
     private static Field CONTENT_FIELD;
 
     static {
         try {
-            NBT_CLASS = BukkitVersionUtil.getNMSClass("NBTTagFloat");
+            NBT_CLASS = BukkitVersionUtil.getNMSClass("NBTTagInt");
             CONTENT_FIELD = NBT_CLASS.getDeclaredField("data");
             CONTENT_FIELD.setAccessible(true);
-            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(Float.TYPE);
+            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(Integer.TYPE);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
@@ -28,38 +28,38 @@ public class ReflectedNBTFloat implements IReflectedNBTBase<Float> {
         }
     }
 
-    public ReflectedNBTFloat(Object o) {
+    public ReflectedNBTInteger(Object o) {
         if (!o.getClass().equals(NBT_CLASS)) {
             return;
         }
         try {
-            this.d = (float) CONTENT_FIELD.get(o);
+            this.d = (int) CONTENT_FIELD.get(o);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
     }
 
-    public ReflectedNBTFloat() {
+    public ReflectedNBTInteger() {
         this.d = 0;
     }
 
     @Override
-    public Float getValue() {
+    public Integer getValue() {
         return d;
     }
 
     @Override
-    public IReflectedNBTBase<Float> getNBTValue() {
-        return new ReflectedNBTFloat(this.d);
+    public IReflectedNBTBase<Integer> getNBTValue() {
+        return new ReflectedNBTInteger(this.d);
     }
 
     @Override
-    public void setValue(Float value) {
-        this.d = value;
+    public void setValue(Integer d) {
+        this.d = d;
     }
 
     @Override
-    public void setNBTValue(IReflectedNBTBase<Float> base) {
+    public void setNBTValue(IReflectedNBTBase<Integer> base) {
         this.d = base.getValue();
     }
 

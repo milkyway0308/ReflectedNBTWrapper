@@ -1,16 +1,18 @@
-package skywolf46.NBTUtil.v1_1R1.NBTData;
+package skywolf46.NBTUtil.v1_1R2.NBTData;
 
-import skywolf46.NBTUtil.v1_1R1.BukkitVersionUtil;
-import skywolf46.NBTUtil.v1_1R1.Exception.UndefinedNBTException;
-import skywolf46.NBTUtil.v1_1R1.Interface.IReflectedNBTBase;
-import skywolf46.NBTUtil.v1_1R1.Interface.IReflectedNBTCompound;
-import skywolf46.NBTUtil.v1_1R1.ReflectedNBTStorage;
+import skywolf46.NBTUtil.v1_1R2.BukkitVersionUtil;
+import skywolf46.NBTUtil.v1_1R2.Exception.UndefinedNBTException;
+import skywolf46.NBTUtil.v1_1R2.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_1R2.Interface.IReflectedNBTCompound;
+import skywolf46.NBTUtil.v1_1R2.ReflectedNBTStorage;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ReflectedNBTCompound implements IReflectedNBTCompound {
@@ -129,6 +131,11 @@ public class ReflectedNBTCompound implements IReflectedNBTCompound {
     public IReflectedNBTCompound setNBT(String str, IReflectedNBTBase<?> o) {
         d.put(str, o);
         return this;
+    }
+
+    @Override
+    public List<String> keyset() {
+        return new ArrayList<>(d.keySet());
     }
 
     public boolean containsKey(String key) {

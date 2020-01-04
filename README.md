@@ -8,13 +8,14 @@ ReflectedNBTWrapper is NBT class wrapper using reflection for plugin version sup
   1. Download last release of ReflectedNBTWrapper from git release history.
   2. Add to dependency. 
   Be careful, ReflectedNBTWrapper use **difference package** to evade version collision.
-  
+  3. Add to extract target.
+  ReflectNBTWrapper must have to extract or included in your plugin.
   #### With Gradle
   > Preparing.
   #### With Maven
   > Preparing.
 ## Example
-  ##### <= 1.1
+  ##### Before version 1.1 R2(1.1.2)
   ```java
         // Simple nbt extract sample.
         // Extract string from item nbt.

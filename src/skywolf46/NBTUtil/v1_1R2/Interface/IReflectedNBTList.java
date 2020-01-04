@@ -1,8 +1,8 @@
-package skywolf46.NBTUtil.v1_1R1.Interface;
+package skywolf46.NBTUtil.v1_1R2.Interface;
 
 import java.util.List;
 
-public interface IReflectedNBTList extends IReflectedNBTBase<List<Object>> {
+public interface IReflectedNBTList extends IReflectedNBTBase<List<Object>>, Iterable<Object> {
 
     int size();
 
