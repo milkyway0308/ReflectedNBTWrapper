@@ -1,9 +1,10 @@
-package skywolf46.NBTUtil.v1_1.NBTData;
+package skywolf46.NBTUtil.v1_1R1.NBTData;
 
-import skywolf46.NBTUtil.v1_1.BukkitVersionUtil;
-import skywolf46.NBTUtil.v1_1.Interface.IReflectedNBTBase;
-import skywolf46.NBTUtil.v1_1.Interface.IReflectedNBTCompound;
-import skywolf46.NBTUtil.v1_1.ReflectedNBTStorage;
+import skywolf46.NBTUtil.v1_1R1.BukkitVersionUtil;
+import skywolf46.NBTUtil.v1_1R1.Exception.UndefinedNBTException;
+import skywolf46.NBTUtil.v1_1R1.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_1R1.Interface.IReflectedNBTCompound;
+import skywolf46.NBTUtil.v1_1R1.ReflectedNBTStorage;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -57,17 +58,6 @@ public class ReflectedNBTCompound implements IReflectedNBTCompound {
 
     }
 
-    public Object getValue(String key) {
-        return d.get(key);
-    }
-
-    public void setValue(String key, IReflectedNBTBase<?> val) {
-        d.put(key, val);
-    }
-
-    public boolean containsValue(String key) {
-        return d.containsKey(key);
-    }
 
     @Override
     public HashMap<String, IReflectedNBTBase<?>> getValue() {
@@ -110,4 +100,39 @@ public class ReflectedNBTCompound implements IReflectedNBTCompound {
         }
         return null;
     }
+
+    @Override
+    public Object get(String str) {
+        IReflectedNBTBase<?> ref = getNBT(str);
+        if(ref == null)
+            return null;
+        return ref.getValue();
+    }
+
+    @Override
+    public IReflectedNBTBase<?> getNBT(String str) {
+        IReflectedNBTBase<?> ref = d.get(str);
+        if (ref == null)
+            return null;
+        return ref;
+    }
+
+    @Override
+    public IReflectedNBTCompound set(String str, Object o) {
+        IReflectedNBTBase<?> ref = ReflectedNBTStorage.createReflectedNBT(o);
+        if (ref == null)
+            throw new UndefinedNBTException(o.getClass());
+        return setNBT(str, ref);
+    }
+
+    @Override
+    public IReflectedNBTCompound setNBT(String str, IReflectedNBTBase<?> o) {
+        d.put(str, o);
+        return this;
+    }
+
+    public boolean containsKey(String key) {
+        return d.containsKey(key);
+    }
+
 }

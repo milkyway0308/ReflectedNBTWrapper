@@ -1,11 +1,11 @@
-package skywolf46.NBTUtil.v1_1.NBTData;
+package skywolf46.NBTUtil.v1_1R1.NBTData;
 
-import skywolf46.NBTUtil.v1_1.BukkitVersionUtil;
-import skywolf46.NBTUtil.v1_1.Exception.CollectionMismatchedException;
-import skywolf46.NBTUtil.v1_1.Exception.UndefinedNBTException;
-import skywolf46.NBTUtil.v1_1.Interface.IReflectedNBTBase;
-import skywolf46.NBTUtil.v1_1.Interface.IReflectedNBTList;
-import skywolf46.NBTUtil.v1_1.ReflectedNBTStorage;
+import skywolf46.NBTUtil.v1_1R1.BukkitVersionUtil;
+import skywolf46.NBTUtil.v1_1R1.Exception.CollectionMismatchedException;
+import skywolf46.NBTUtil.v1_1R1.Exception.UndefinedNBTException;
+import skywolf46.NBTUtil.v1_1R1.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_1R1.Interface.IReflectedNBTList;
+import skywolf46.NBTUtil.v1_1R1.ReflectedNBTStorage;
 
 import java.lang.reflect.*;
 import java.util.ArrayList;

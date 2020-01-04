@@ -1,4 +1,4 @@
-package skywolf46.NBTUtil.v1_1.Interface;
+package skywolf46.NBTUtil.v1_1R1.Interface;
 
 import java.util.List;
 

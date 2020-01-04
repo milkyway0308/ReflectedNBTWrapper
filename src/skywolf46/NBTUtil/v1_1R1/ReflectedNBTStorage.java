@@ -1,7 +1,7 @@
-package skywolf46.NBTUtil.v1_1;
+package skywolf46.NBTUtil.v1_1R1;
 
-import skywolf46.NBTUtil.v1_1.Interface.IReflectedNBTBase;
-import skywolf46.NBTUtil.v1_1.NBTData.*;
+import skywolf46.NBTUtil.v1_1R1.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_1R1.NBTData.*;
 
 import java.util.HashMap;
 import java.util.function.Function;
@@ -29,7 +29,7 @@ public final class ReflectedNBTStorage {
     }
 
     private ReflectedNBTStorage() {
-        
+
     }
 
     public static IReflectedNBTBase<?> createReflectedNBT(Object nbtData) {

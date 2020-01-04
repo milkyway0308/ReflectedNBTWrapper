@@ -1,4 +1,4 @@
-package skywolf46.NBTUtil.v1_1.Exception;
+package skywolf46.NBTUtil.v1_1R1.Exception;
 
 public class UndefinedNBTException extends RuntimeException {
     public UndefinedNBTException(Class c) {
