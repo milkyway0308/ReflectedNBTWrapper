@@ -1,4 +1,4 @@
-package skywolf46.NBTUtil.v1_0;
+package skywolf46.NBTUtil.v1_1;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;

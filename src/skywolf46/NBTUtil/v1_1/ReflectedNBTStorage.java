@@ -1,12 +1,13 @@
-package skywolf46.NBTUtil.v1_0;
+package skywolf46.NBTUtil.v1_1;
 
-import skywolf46.NBTUtil.v1_0.NBTData.*;
+import skywolf46.NBTUtil.v1_1.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_1.NBTData.*;
 
 import java.util.HashMap;
 import java.util.function.Function;
 
-public abstract class ReflectedNBTBase {
-    private static HashMap<Class, Function<Object, ? extends ReflectedNBTBase>> map = new HashMap<>();
+public final class ReflectedNBTStorage {
+    private static HashMap<Class, Function<Object, ? extends IReflectedNBTBase<?>>> map = new HashMap<>();
 
     static {
         try {
@@ -27,15 +28,18 @@ public abstract class ReflectedNBTBase {
         }
     }
 
-    public static ReflectedNBTBase createReflectedNBT(Object nbtData) {
+    private ReflectedNBTStorage() {
+        
+    }
+
+    public static IReflectedNBTBase<?> createReflectedNBT(Object nbtData) {
         if (map.containsKey(nbtData.getClass()))
             return map.get(nbtData.getClass()).apply(nbtData);
         return null;
     }
 
-    public static void registerNBTBase(Class c, Function<Object, ? extends ReflectedNBTBase> funct) {
+    public static void registerNBTBase(Class c, Function<Object, ? extends IReflectedNBTBase<?>> funct) {
         map.put(c, funct);
     }
 
-    public abstract Object getNBTBase();
 }

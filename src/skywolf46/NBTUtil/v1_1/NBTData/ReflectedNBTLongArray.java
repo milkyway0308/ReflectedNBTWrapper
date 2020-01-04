@@ -1,15 +1,15 @@
-package skywolf46.NBTUtil.v1_0.NBTData;
+package skywolf46.NBTUtil.v1_1.NBTData;
 
-import skywolf46.NBTUtil.v1_0.BukkitVersionUtil;
-import skywolf46.NBTUtil.v1_0.ReflectedNBTBase;
+import skywolf46.NBTUtil.v1_1.BukkitVersionUtil;
+import skywolf46.NBTUtil.v1_1.Interface.IReflectedNBTBase;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
-public class ReflectedNBTByteArray extends ReflectedNBTBase {
-    private byte[] data;
+public class ReflectedNBTLongArray implements IReflectedNBTBase<Long[]> {
+    private Long[] data;
 
     private static Class NBT_CLASS;
     private static Constructor NBT_CONSTRUCTOR;
@@ -17,10 +17,10 @@ public class ReflectedNBTByteArray extends ReflectedNBTBase {
 
     static {
         try {
-            NBT_CLASS = BukkitVersionUtil.getNMSClass("NBTTagByteArray");
+            NBT_CLASS = BukkitVersionUtil.getNMSClass("NBTTagLongArray");
             CONTENT_FIELD = NBT_CLASS.getDeclaredField("data");
             CONTENT_FIELD.setAccessible(true);
-            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(new byte[0].getClass());
+            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(new long[0].getClass());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
@@ -30,29 +30,45 @@ public class ReflectedNBTByteArray extends ReflectedNBTBase {
         }
     }
 
-    public ReflectedNBTByteArray(Object o) {
+    public ReflectedNBTLongArray(Object o) {
         if (!o.getClass().equals(NBT_CLASS)) {
             return;
         }
         try {
-            this.data = (byte[]) CONTENT_FIELD.get(o);
+            long[] data = (long[]) CONTENT_FIELD.get(o);
+            this.data = new Long[data.length];
+            for (int i = 0; i < data.length; i++)
+                this.data[i] = data[i];
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
     }
 
-    public ReflectedNBTByteArray(byte[] arr) {
+    public ReflectedNBTLongArray(Long[] arr) {
         this.data = arr;
     }
 
-    public byte[] getData() {
-        return data;
+    @Override
+    public Long[] getValue() {
+        return Arrays.copyOf(data, data.length);
     }
 
-    public void setData(byte[] data) {
-        this.data = data;
+    @Override
+    public IReflectedNBTBase<Long[]> getNBTValue() {
+        return new ReflectedNBTLongArray(getValue());
     }
 
+    @Override
+    public void setValue(Long[] value) {
+        this.data = Arrays.copyOf(value, value.length);
+    }
+
+    @Override
+    public void setNBTValue(IReflectedNBTBase<Long[]> base) {
+        setValue(base.getValue());
+    }
+
+    @Override
     public Object getNBTBase() {
         try {
             return NBT_CONSTRUCTOR.newInstance(Arrays.copyOf(data, data.length));

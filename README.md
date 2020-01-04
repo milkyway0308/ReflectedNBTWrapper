@@ -1,20 +1,20 @@
-# **ReflectedNBTWrapper**
+# **ReflectedNBTWrapper** [![](https://jitci.com/gh/milkyway0308/ReflectedNBTWrapper/svg)](https://jitci.com/gh/milkyway0308/ReflectedNBTWrapper)
 
 ReflectedNBTWrapper is NBT class wrapper using reflection for plugin version support.
 
 
 ## Installation
-  ####Without build tools
+  #### Without build tools
   1. Download last release of ReflectedNBTWrapper from git release history.
   2. Add to dependency. 
-  Be careful, **ReflectedNBTWrapper** use difference package to evade version collision.
+  Be careful, ReflectedNBTWrapper use **difference package** to evade version collision.
   
   #### With Gradle
   > Preparing.
   #### With Maven
   > Preparing.
 ## Example
-  ##### 1.0 - Release
+  ##### <= 1.1
   ```java
         // Simple nbt extract sample.
         // Extract string from item nbt.
