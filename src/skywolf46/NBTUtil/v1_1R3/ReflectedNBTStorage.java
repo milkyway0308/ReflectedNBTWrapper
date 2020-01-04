@@ -1,7 +1,7 @@
-package skywolf46.NBTUtil.v1_1R2;
+package skywolf46.NBTUtil.v1_1R3;
 
-import skywolf46.NBTUtil.v1_1R2.Interface.IReflectedNBTBase;
-import skywolf46.NBTUtil.v1_1R2.NBTData.*;
+import skywolf46.NBTUtil.v1_1R3.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_1R3.NBTData.*;
 
 import java.util.HashMap;
 import java.util.function.Function;

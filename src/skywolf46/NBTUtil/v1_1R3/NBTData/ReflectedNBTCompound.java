@@ -1,10 +1,10 @@
-package skywolf46.NBTUtil.v1_1R2.NBTData;
+package skywolf46.NBTUtil.v1_1R3.NBTData;
 
-import skywolf46.NBTUtil.v1_1R2.BukkitVersionUtil;
-import skywolf46.NBTUtil.v1_1R2.Exception.UndefinedNBTException;
-import skywolf46.NBTUtil.v1_1R2.Interface.IReflectedNBTBase;
-import skywolf46.NBTUtil.v1_1R2.Interface.IReflectedNBTCompound;
-import skywolf46.NBTUtil.v1_1R2.ReflectedNBTStorage;
+import skywolf46.NBTUtil.v1_1R3.BukkitVersionUtil;
+import skywolf46.NBTUtil.v1_1R3.Exception.UndefinedNBTException;
+import skywolf46.NBTUtil.v1_1R3.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_1R3.Interface.IReflectedNBTCompound;
+import skywolf46.NBTUtil.v1_1R3.ReflectedNBTStorage;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -62,26 +62,37 @@ public class ReflectedNBTCompound implements IReflectedNBTCompound {
 
 
     @Override
-    public HashMap<String, IReflectedNBTBase<?>> getValue() {
-        return new HashMap<>(d);
+    public HashMap<String, Object> getValue() {
+        HashMap<String, Object> map = new HashMap<>();
+        for (Map.Entry<String, IReflectedNBTBase<?>> data : d.entrySet())
+            map.put(data.getKey(), data.getValue().getValue());
+        return map;
     }
 
     @Override
-    public IReflectedNBTBase<HashMap<String, IReflectedNBTBase<?>>> getNBTValue() {
+    public IReflectedNBTBase<HashMap<String, Object>> getNBTValue() {
         ReflectedNBTCompound ref = new ReflectedNBTCompound();
         ref.d = new HashMap<>(d);
         return ref;
     }
 
     @Override
-    public void setValue(HashMap<String, IReflectedNBTBase<?>> value) {
-        this.d = new HashMap<>(value);
+    public void setValue(HashMap<String, Object> value) {
+        this.d.clear();
+        for (Map.Entry<String, Object> entry : value.entrySet()) {
+            IReflectedNBTBase<?> b = ReflectedNBTStorage.createReflectedNBT(entry.getValue());
+            if (b == null) {
+                this.d.clear();
+                throw new UndefinedNBTException(value.getClass());
+            }
+            this.d.put(entry.getKey(), b);
+        }
     }
 
     @Override
     @Deprecated
-    public void setNBTValue(IReflectedNBTBase<HashMap<String, IReflectedNBTBase<?>>> base) {
-        this.d = new HashMap<>(base.getValue());
+    public void setNBTValue(IReflectedNBTBase<HashMap<String, Object>> base) {
+        setValue(base.getValue());
     }
 
     public Object getNBTBase() {
@@ -106,7 +117,7 @@ public class ReflectedNBTCompound implements IReflectedNBTCompound {
     @Override
     public Object get(String str) {
         IReflectedNBTBase<?> ref = getNBT(str);
-        if(ref == null)
+        if (ref == null)
             return null;
         return ref.getValue();
     }
@@ -134,10 +145,31 @@ public class ReflectedNBTCompound implements IReflectedNBTCompound {
     }
 
     @Override
+    public IReflectedNBTBase<?> remove(String str) {
+        return d.remove(str);
+    }
+
+    @Override
     public List<String> keyset() {
         return new ArrayList<>(d.keySet());
     }
 
+    @Override
+    public void collapse(IReflectedNBTCompound ref) {
+        d.putAll(ref.getNBTMap());
+    }
+
+    @Override
+    public void clear() {
+        d.clear();
+    }
+
+    @Override
+    public HashMap<String, IReflectedNBTBase<?>> getNBTMap() {
+        return new HashMap<>(d);
+    }
+
+    @Override
     public boolean containsKey(String key) {
         return d.containsKey(key);
     }
