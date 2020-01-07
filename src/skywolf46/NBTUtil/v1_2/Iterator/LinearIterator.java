@@ -1,4 +1,4 @@
-package skywolf46.NBTUtil.v1_1R3.Iterator;
+package skywolf46.NBTUtil.v1_2.Iterator;
 
 import java.util.Iterator;
 

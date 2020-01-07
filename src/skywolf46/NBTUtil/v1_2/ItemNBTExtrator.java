@@ -1,7 +1,7 @@
-package skywolf46.NBTUtil.v1_1R3;
+package skywolf46.NBTUtil.v1_2;
 
 import org.bukkit.inventory.ItemStack;
-import skywolf46.NBTUtil.v1_1R3.NBTData.ReflectedNBTCompound;
+import skywolf46.NBTUtil.v1_2.NBTData.ReflectedNBTCompound;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

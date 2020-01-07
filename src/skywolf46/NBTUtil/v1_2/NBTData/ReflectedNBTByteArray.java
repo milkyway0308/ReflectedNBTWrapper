@@ -1,15 +1,15 @@
-package skywolf46.NBTUtil.v1_1R3.NBTData;
+package skywolf46.NBTUtil.v1_2.NBTData;
 
-import skywolf46.NBTUtil.v1_1R3.BukkitVersionUtil;
-import skywolf46.NBTUtil.v1_1R3.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_2.BukkitVersionUtil;
+import skywolf46.NBTUtil.v1_2.Interface.IReflectedNBTBase;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
-public class ReflectedNBTLongArray implements IReflectedNBTBase<Long[]> {
-    private Long[] data;
+public class ReflectedNBTByteArray implements IReflectedNBTBase<Byte[]> {
+    private Byte[] data;
 
     private static Class NBT_CLASS;
     private static Constructor NBT_CONSTRUCTOR;
@@ -17,10 +17,10 @@ public class ReflectedNBTLongArray implements IReflectedNBTBase<Long[]> {
 
     static {
         try {
-            NBT_CLASS = BukkitVersionUtil.getNMSClass("NBTTagLongArray");
+            NBT_CLASS = BukkitVersionUtil.getNMSClass("NBTTagByteArray");
             CONTENT_FIELD = NBT_CLASS.getDeclaredField("data");
             CONTENT_FIELD.setAccessible(true);
-            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(new long[0].getClass());
+            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(new byte[0].getClass());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
@@ -30,42 +30,42 @@ public class ReflectedNBTLongArray implements IReflectedNBTBase<Long[]> {
         }
     }
 
-    public ReflectedNBTLongArray(Object o) {
+    public ReflectedNBTByteArray(Object o) {
         if (!o.getClass().equals(NBT_CLASS)) {
             return;
         }
         try {
-            long[] data = (long[]) CONTENT_FIELD.get(o);
-            this.data = new Long[data.length];
-            for (int i = 0; i < data.length; i++)
-                this.data[i] = data[i];
+            byte[] val = (byte[]) CONTENT_FIELD.get(o);
+            data = new Byte[val.length];
+            for (int i = 0; i < val.length; i++)
+                data[i] = val[i];
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
     }
 
-    public ReflectedNBTLongArray(Long[] arr) {
-        this.data = arr;
+    public ReflectedNBTByteArray(Byte[] arr) {
+        this.data = Arrays.copyOf(arr, arr.length);
     }
 
     @Override
-    public Long[] getValue() {
-        return Arrays.copyOf(data, data.length);
+    public Byte[] getValue() {
+        return data;
     }
 
     @Override
-    public IReflectedNBTBase<Long[]> getNBTValue() {
-        return new ReflectedNBTLongArray(getValue());
+    public IReflectedNBTBase<Byte[]> getNBTValue() {
+        return new ReflectedNBTByteArray(this.data);
     }
 
     @Override
-    public void setValue(Long[] value) {
-        this.data = Arrays.copyOf(value, value.length);
+    public void setValue(Byte[] value) {
+        this.data = value;
     }
 
     @Override
-    public void setNBTValue(IReflectedNBTBase<Long[]> base) {
-        setValue(base.getValue());
+    public void setNBTValue(IReflectedNBTBase<Byte[]> base) {
+        this.data = Arrays.copyOf(base.getValue(), base.getValue().length);
     }
 
     @Override

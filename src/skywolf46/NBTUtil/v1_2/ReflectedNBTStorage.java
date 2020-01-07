@@ -1,7 +1,7 @@
-package skywolf46.NBTUtil.v1_1R3;
+package skywolf46.NBTUtil.v1_2;
 
-import skywolf46.NBTUtil.v1_1R3.Interface.IReflectedNBTBase;
-import skywolf46.NBTUtil.v1_1R3.NBTData.*;
+import skywolf46.NBTUtil.v1_2.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_2.NBTData.*;
 
 import java.util.HashMap;
 import java.util.function.Function;
@@ -23,6 +23,62 @@ public final class ReflectedNBTStorage {
             registerNBTBase(BukkitVersionUtil.getNMSClass("NBTTagByteArray"), ReflectedNBTByteArray::new);
             registerNBTBase(BukkitVersionUtil.getNMSClass("NBTTagIntArray"), ReflectedNBTIntegerArray::new);
             registerNBTBase(BukkitVersionUtil.getNMSClass("NBTTagList"), ReflectedNBTList::new);
+
+            registerNBTBase(String.class, str -> {
+                ReflectedNBTString nbt = new ReflectedNBTString();
+                nbt.setValue((String) str);
+                return nbt;
+            });
+
+            registerNBTBase(Integer.class, str -> {
+                ReflectedNBTInteger nbt = new ReflectedNBTInteger();
+                nbt.setValue((Integer) str);
+                return nbt;
+            });
+
+            registerNBTBase(Integer.TYPE, map.get(Integer.class));
+
+            registerNBTBase(Double.class, str -> {
+                ReflectedNBTDouble nbt = new ReflectedNBTDouble();
+                nbt.setValue((Double) str);
+                return nbt;
+            });
+
+            registerNBTBase(Double.TYPE, map.get(Double.class));
+
+
+            registerNBTBase(Byte.class, str -> {
+                ReflectedNBTByte nbt = new ReflectedNBTByte();
+                nbt.setValue((Byte) str);
+                return nbt;
+            });
+
+            registerNBTBase(Byte.TYPE, map.get(Byte.class));
+
+            registerNBTBase(Float.class, str -> {
+                ReflectedNBTFloat nbt = new ReflectedNBTFloat();
+                nbt.setValue((Float) str);
+                return nbt;
+            });
+
+            registerNBTBase(Float.TYPE, map.get(Float.class));
+
+            registerNBTBase(Long.class, str -> {
+                ReflectedNBTLong nbt = new ReflectedNBTLong();
+                nbt.setValue((Long) str);
+                return nbt;
+            });
+
+            registerNBTBase(Long.TYPE, map.get(Long.class));
+
+
+            registerNBTBase(Short.class, str -> {
+                ReflectedNBTShort nbt = new ReflectedNBTShort();
+                nbt.setValue((Short) str);
+                return nbt;
+            });
+
+            registerNBTBase(Short.TYPE, map.get(Short.class));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

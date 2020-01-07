@@ -1,12 +1,12 @@
-package skywolf46.NBTUtil.v1_1R3.NBTData;
+package skywolf46.NBTUtil.v1_2.NBTData;
 
-import skywolf46.NBTUtil.v1_1R3.BukkitVersionUtil;
-import skywolf46.NBTUtil.v1_1R3.Exception.CollectionMismatchedException;
-import skywolf46.NBTUtil.v1_1R3.Exception.UndefinedNBTException;
-import skywolf46.NBTUtil.v1_1R3.Interface.IReflectedNBTBase;
-import skywolf46.NBTUtil.v1_1R3.Interface.IReflectedNBTList;
-import skywolf46.NBTUtil.v1_1R3.Iterator.LinearIterator;
-import skywolf46.NBTUtil.v1_1R3.ReflectedNBTStorage;
+import skywolf46.NBTUtil.v1_2.BukkitVersionUtil;
+import skywolf46.NBTUtil.v1_2.Exception.CollectionMismatchedException;
+import skywolf46.NBTUtil.v1_2.Exception.UndefinedNBTException;
+import skywolf46.NBTUtil.v1_2.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_2.Interface.IReflectedNBTList;
+import skywolf46.NBTUtil.v1_2.Iterator.LinearIterator;
+import skywolf46.NBTUtil.v1_2.ReflectedNBTStorage;
 
 import javax.annotation.Nonnull;
 import java.lang.reflect.*;

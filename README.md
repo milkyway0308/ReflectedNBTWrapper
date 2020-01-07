@@ -15,7 +15,26 @@ ReflectedNBTWrapper is NBT class wrapper using reflection for plugin version sup
   #### With Maven
   > Preparing.
 ## Example
-  ##### Before version 1.1 R2(1.1.2)
+  ##### Before version 1.2(1.2 Release)
+    ```java
+          // Simple nbt extract sample.
+          // Extract string from item nbt.
+          public static String extractExample(ItemStack item){
+              ReflectedNBTCompound base = ItemNBTExtrator.extractNBT(item);            
+              if(base == null || base.getValue("ItemText") == null)
+                  return null;
+              return ((ReflectedNBTString)base.getValue("ItemText")).getValue();
+          }
+          
+          // Simple nbt import sample.
+          // Save some string to item nbt.
+          public static ItemStack importSample(ItemStack item){
+              ReflectedNBTCompound base = ItemNBTExtrator.extractOrCreateNBT(item);
+              base.setValue("ItemText","Hello, World!");
+              return ItemNBTImporter.importNBT(item,base);
+          }
+    ```
+  ##### Before version 1.1 R2(1.1.2 Alpha)
   ```java
         // Simple nbt extract sample.
         // Extract string from item nbt.
