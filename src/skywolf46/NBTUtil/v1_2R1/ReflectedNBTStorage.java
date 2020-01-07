@@ -1,7 +1,7 @@
-package skywolf46.NBTUtil.v1_2;
+package skywolf46.NBTUtil.v1_2R1;
 
-import skywolf46.NBTUtil.v1_2.Interface.IReflectedNBTBase;
-import skywolf46.NBTUtil.v1_2.NBTData.*;
+import skywolf46.NBTUtil.v1_2R1.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_2R1.NBTData.*;
 
 import java.util.HashMap;
 import java.util.function.Function;
@@ -89,6 +89,8 @@ public final class ReflectedNBTStorage {
     }
 
     public static IReflectedNBTBase<?> createReflectedNBT(Object nbtData) {
+        if (nbtData instanceof IReflectedNBTBase)
+            return (IReflectedNBTBase<?>) nbtData;
         if (map.containsKey(nbtData.getClass()))
             return map.get(nbtData.getClass()).apply(nbtData);
         return null;

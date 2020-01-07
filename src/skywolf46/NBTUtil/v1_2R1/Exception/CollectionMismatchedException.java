@@ -1,4 +1,4 @@
-package skywolf46.NBTUtil.v1_2.Exception;
+package skywolf46.NBTUtil.v1_2R1.Exception;
 
 public class CollectionMismatchedException extends RuntimeException {
     public CollectionMismatchedException(Class bef, Class nex) {

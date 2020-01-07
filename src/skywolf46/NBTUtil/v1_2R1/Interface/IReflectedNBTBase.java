@@ -1,4 +1,4 @@
-package skywolf46.NBTUtil.v1_2.Interface;
+package skywolf46.NBTUtil.v1_2R1.Interface;
 
 public interface IReflectedNBTBase<T> {
     T getValue();

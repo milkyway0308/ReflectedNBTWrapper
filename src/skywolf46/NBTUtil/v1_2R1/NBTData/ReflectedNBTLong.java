@@ -1,24 +1,24 @@
-package skywolf46.NBTUtil.v1_2.NBTData;
+package skywolf46.NBTUtil.v1_2R1.NBTData;
 
-import skywolf46.NBTUtil.v1_2.BukkitVersionUtil;
-import skywolf46.NBTUtil.v1_2.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_2R1.BukkitVersionUtil;
+import skywolf46.NBTUtil.v1_2R1.Interface.IReflectedNBTBase;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
-public class ReflectedNBTShort implements IReflectedNBTBase<Short> {
-    private short d;
+public class ReflectedNBTLong implements IReflectedNBTBase<Long> {
+    private long d;
     private static Class NBT_CLASS;
     private static Constructor NBT_CONSTRUCTOR;
     private static Field CONTENT_FIELD;
 
     static {
         try {
-            NBT_CLASS = BukkitVersionUtil.getNMSClass("NBTTagShort");
+            NBT_CLASS = BukkitVersionUtil.getNMSClass("NBTTagLong");
             CONTENT_FIELD = NBT_CLASS.getDeclaredField("data");
             CONTENT_FIELD.setAccessible(true);
-            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(Short.TYPE);
+            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(Long.TYPE);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
@@ -28,38 +28,38 @@ public class ReflectedNBTShort implements IReflectedNBTBase<Short> {
         }
     }
 
-    public ReflectedNBTShort(Object o) {
+    public ReflectedNBTLong(Object o) {
         if (!o.getClass().equals(NBT_CLASS)) {
             return;
         }
         try {
-            this.d = (short) CONTENT_FIELD.get(o);
+            this.d = (long) CONTENT_FIELD.get(o);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
     }
 
-    public ReflectedNBTShort() {
+    public ReflectedNBTLong() {
         this.d = 0;
     }
 
     @Override
-    public Short getValue() {
+    public Long getValue() {
         return d;
     }
 
     @Override
-    public IReflectedNBTBase<Short> getNBTValue() {
-        return new ReflectedNBTShort(this.d);
+    public IReflectedNBTBase<Long> getNBTValue() {
+        return new ReflectedNBTLong(this.d);
     }
 
     @Override
-    public void setValue(Short d) {
+    public void setValue(Long d) {
         this.d = d;
     }
 
     @Override
-    public void setNBTValue(IReflectedNBTBase<Short> base) {
+    public void setNBTValue(IReflectedNBTBase<Long> base) {
         this.d = base.getValue();
     }
 
