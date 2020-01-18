@@ -1,7 +1,7 @@
-package skywolf46.NBTUtil.v1_2R1;
+package skywolf46.NBTUtil.v1_2R2;
 
-import skywolf46.NBTUtil.v1_2R1.Interface.IReflectedNBTBase;
-import skywolf46.NBTUtil.v1_2R1.NBTData.*;
+import skywolf46.NBTUtil.v1_2R2.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_2R2.NBTData.*;
 
 import java.util.HashMap;
 import java.util.function.Function;
@@ -97,6 +97,7 @@ public final class ReflectedNBTStorage {
     }
 
     public static void registerNBTBase(Class c, Function<Object, ? extends IReflectedNBTBase<?>> funct) {
+
         map.put(c, funct);
     }
 
