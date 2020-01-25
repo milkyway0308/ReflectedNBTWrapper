@@ -1,12 +1,12 @@
-package skywolf46.NBTUtil.v1_2R2.NBTData;
+package skywolf46.NBTUtil.v1_2R3.NBTData;
 
-import skywolf46.NBTUtil.v1_2R2.BukkitVersionUtil;
-import skywolf46.NBTUtil.v1_2R2.Exception.CollectionMismatchedException;
-import skywolf46.NBTUtil.v1_2R2.Exception.UndefinedNBTException;
-import skywolf46.NBTUtil.v1_2R2.Interface.IReflectedNBTBase;
-import skywolf46.NBTUtil.v1_2R2.Interface.IReflectedNBTList;
-import skywolf46.NBTUtil.v1_2R2.Iterator.LinearIterator;
-import skywolf46.NBTUtil.v1_2R2.ReflectedNBTStorage;
+import skywolf46.NBTUtil.v1_2R3.BukkitVersionUtil;
+import skywolf46.NBTUtil.v1_2R3.Exception.CollectionMismatchedException;
+import skywolf46.NBTUtil.v1_2R3.Exception.UndefinedNBTException;
+import skywolf46.NBTUtil.v1_2R3.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_2R3.Interface.IReflectedNBTList;
+import skywolf46.NBTUtil.v1_2R3.Iterator.LinearIterator;
+import skywolf46.NBTUtil.v1_2R3.ReflectedNBTStorage;
 
 import javax.annotation.Nonnull;
 import java.lang.reflect.*;
@@ -56,7 +56,7 @@ public class ReflectedNBTList implements IReflectedNBTList {
             for (Object obj : listNBT)
                 nb.add(ReflectedNBTStorage.createReflectedNBT(obj));
             if (listNBT.size() != 0)
-                nbtClass = listNBT.get(0).getClass();
+                nbtClass = nb.get(0).getClass();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }

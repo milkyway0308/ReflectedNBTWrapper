@@ -1,12 +1,12 @@
-package skywolf46.NBTUtil.v1_2R2;
+package skywolf46.NBTUtil.v1_2R3;
 
 import org.bukkit.inventory.ItemStack;
-import skywolf46.NBTUtil.v1_2R2.NBTData.ReflectedNBTCompound;
+import skywolf46.NBTUtil.v1_2R3.NBTData.ReflectedNBTCompound;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class ItemNBTImporter {
+public class ItemNBTExtrator {
     private static Method CRAFTITEM_COPY;
     private static Method BUKKIT_COPY;
     private static Method NET_ITEMSTACK_NBT_EXTRACT;
@@ -27,11 +27,14 @@ public class ItemNBTImporter {
         }
 
     }
-    public static ItemStack importNBT(ItemStack item, ReflectedNBTCompound compound) {
+
+    public static ReflectedNBTCompound extractNBT(ItemStack item) {
         try {
             Object next = CRAFTITEM_COPY.invoke(null, item);
-            NET_ITEMSTACK_NBT_IMPORT.invoke(next, compound.getNBTBase());
-            return (ItemStack) BUKKIT_COPY.invoke(null, next);
+            Object extract = NET_ITEMSTACK_NBT_EXTRACT.invoke(next);
+            if (extract == null)
+                return null;
+            return new ReflectedNBTCompound(extract);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -39,4 +42,12 @@ public class ItemNBTImporter {
         }
         return null;
     }
+
+    public static ReflectedNBTCompound extractOrCreateNBT(ItemStack item) {
+        ReflectedNBTCompound ex = extractNBT(item);
+        if (ex == null)
+            return new ReflectedNBTCompound();
+        return ex;
+    }
+
 }
