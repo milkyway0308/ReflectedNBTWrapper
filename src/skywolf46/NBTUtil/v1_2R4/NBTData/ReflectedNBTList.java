@@ -1,12 +1,12 @@
-package skywolf46.NBTUtil.v1_2R3.NBTData;
+package skywolf46.NBTUtil.v1_2R4.NBTData;
 
-import skywolf46.NBTUtil.v1_2R3.BukkitVersionUtil;
-import skywolf46.NBTUtil.v1_2R3.Exception.CollectionMismatchedException;
-import skywolf46.NBTUtil.v1_2R3.Exception.UndefinedNBTException;
-import skywolf46.NBTUtil.v1_2R3.Interface.IReflectedNBTBase;
-import skywolf46.NBTUtil.v1_2R3.Interface.IReflectedNBTList;
-import skywolf46.NBTUtil.v1_2R3.Iterator.LinearIterator;
-import skywolf46.NBTUtil.v1_2R3.ReflectedNBTStorage;
+import skywolf46.NBTUtil.v1_2R4.BukkitVersionUtil;
+import skywolf46.NBTUtil.v1_2R4.Exception.CollectionMismatchedException;
+import skywolf46.NBTUtil.v1_2R4.Exception.UndefinedNBTException;
+import skywolf46.NBTUtil.v1_2R4.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_2R4.Interface.IReflectedNBTList;
+import skywolf46.NBTUtil.v1_2R4.Iterator.LinearIterator;
+import skywolf46.NBTUtil.v1_2R4.ReflectedNBTStorage;
 
 import javax.annotation.Nonnull;
 import java.lang.reflect.*;
@@ -66,6 +66,15 @@ public class ReflectedNBTList implements IReflectedNBTList {
 
     }
 
+    public ReflectedNBTList(List<Object> lst) {
+        lst.forEach(obj -> {
+            IReflectedNBTBase<?> rep = ReflectedNBTStorage.createReflectedNBT(obj);
+            if(rep == null)
+                throw new UndefinedNBTException(obj.getClass());
+            nb.add(rep);
+        });
+    }
+
     public int size() {
         return nb.size();
     }
@@ -84,6 +93,11 @@ public class ReflectedNBTList implements IReflectedNBTList {
         if (ref == null)
             throw new UndefinedNBTException(o.getClass());
         return setNBT(index, ref);
+    }
+
+    @Override
+    public Object remove(int index) {
+        return nb.remove(index).getValue();
     }
 
     @Override

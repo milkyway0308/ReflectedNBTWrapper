@@ -1,4 +1,4 @@
-package skywolf46.NBTUtil.v1_2R3.Interface;
+package skywolf46.NBTUtil.v1_2R4.Interface;
 
 import java.util.List;
 
@@ -9,6 +9,8 @@ public interface IReflectedNBTList extends IReflectedNBTBase<List<Object>>, Iter
     IReflectedNBTList add(Object o);
 
     IReflectedNBTList set(int index, Object o);
+
+    Object remove(int index);
 
     Object get(int index);
 

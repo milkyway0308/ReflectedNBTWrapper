@@ -1,7 +1,7 @@
-package skywolf46.NBTUtil.v1_2R3.NBTData;
+package skywolf46.NBTUtil.v1_2R4.NBTData;
 
-import skywolf46.NBTUtil.v1_2R3.BukkitVersionUtil;
-import skywolf46.NBTUtil.v1_2R3.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_2R4.BukkitVersionUtil;
+import skywolf46.NBTUtil.v1_2R4.Interface.IReflectedNBTBase;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -20,7 +20,7 @@ public class ReflectedNBTByteArray implements IReflectedNBTBase<Byte[]> {
             NBT_CLASS = BukkitVersionUtil.getNMSClass("NBTTagByteArray");
             CONTENT_FIELD = NBT_CLASS.getDeclaredField("data");
             CONTENT_FIELD.setAccessible(true);
-            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(new byte[0].getClass());
+            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(byte[].class);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
@@ -71,7 +71,10 @@ public class ReflectedNBTByteArray implements IReflectedNBTBase<Byte[]> {
     @Override
     public Object getNBTBase() {
         try {
-            return NBT_CONSTRUCTOR.newInstance(Arrays.copyOf(data, data.length));
+            byte[] copyVal = new byte[data.length];
+            for(int i = 0;i < copyVal.length;i++)
+                copyVal[i] = data[i];
+            return NBT_CONSTRUCTOR.newInstance(copyVal);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

@@ -1,9 +1,11 @@
-package skywolf46.NBTUtil.v1_2R3;
+package skywolf46.NBTUtil.v1_2R4;
 
-import skywolf46.NBTUtil.v1_2R3.Interface.IReflectedNBTBase;
-import skywolf46.NBTUtil.v1_2R3.NBTData.*;
+import skywolf46.NBTUtil.v1_2R4.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_2R4.NBTData.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Function;
 
 public final class ReflectedNBTStorage {
@@ -23,6 +25,8 @@ public final class ReflectedNBTStorage {
             registerNBTBase(BukkitVersionUtil.getNMSClass("NBTTagByteArray"), ReflectedNBTByteArray::new);
             registerNBTBase(BukkitVersionUtil.getNMSClass("NBTTagIntArray"), ReflectedNBTIntegerArray::new);
             registerNBTBase(BukkitVersionUtil.getNMSClass("NBTTagList"), ReflectedNBTList::new);
+            registerNBTBase(ArrayList.class,a -> new ReflectedNBTList((List<Object>)a));
+            registerNBTBase(List.class,a -> new ReflectedNBTList((List<Object>)a));
 
             registerNBTBase(String.class, str -> {
                 ReflectedNBTString nbt = new ReflectedNBTString();

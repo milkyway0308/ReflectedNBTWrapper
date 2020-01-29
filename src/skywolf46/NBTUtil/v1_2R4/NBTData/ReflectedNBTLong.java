@@ -1,7 +1,7 @@
-package skywolf46.NBTUtil.v1_2R3.NBTData;
+package skywolf46.NBTUtil.v1_2R4.NBTData;
 
-import skywolf46.NBTUtil.v1_2R3.BukkitVersionUtil;
-import skywolf46.NBTUtil.v1_2R3.Interface.IReflectedNBTBase;
+import skywolf46.NBTUtil.v1_2R4.BukkitVersionUtil;
+import skywolf46.NBTUtil.v1_2R4.Interface.IReflectedNBTBase;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
