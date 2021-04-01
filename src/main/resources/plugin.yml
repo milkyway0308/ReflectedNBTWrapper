@@ -1,0 +1,5 @@
+name: ReflectedNBTWrapper
+version: ${version}
+main: skywolf46.refnbt.ReflectedNBTWrapper
+depend:
+  - SkywolfExtraUtility
