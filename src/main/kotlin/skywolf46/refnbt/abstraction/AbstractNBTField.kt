@@ -7,7 +7,7 @@ import skywolf46.refnbt.impl.collections.ListNBTField
 import skywolf46.refnbt.util.BukkitVersionUtil
 import java.lang.reflect.Method
 
-abstract class AbstractNBTField<T : Any> {
+abstract class AbstractNBTField<out T : Any> {
     companion object {
         private val registry: MutableMap<Class<*>, AbstractNBTField<*>> = HashMap()
         private val registryNBT: MutableMap<Class<*>, AbstractNBTField<*>> = HashMap()
@@ -53,7 +53,7 @@ abstract class AbstractNBTField<T : Any> {
         }
     }
 
-    abstract fun getAppliedClass(): Class<T>
+    abstract fun getAppliedClass(): Class<out T>
     abstract fun getNBTClass(): Class<*>
     abstract fun toNBTBase(): Any
     abstract fun fromNBTBase(nbt: Any): AbstractNBTField<T>
@@ -61,6 +61,11 @@ abstract class AbstractNBTField<T : Any> {
     abstract fun get(): T
 }
 
-inline fun <reified T : Any> T.asNBT(): AbstractNBTField<T>? {
-    return AbstractNBTField.getByClass<T>(this::class.java, this)?.fromObject(this)
+fun <T : Any> T.asNBT(): AbstractNBTField<T>? {
+    val data = AbstractNBTField.getByClass<T>(this::class.java, this)
+    if (data != null)
+        return data.fromObject(this)
+    return AbstractNBTStructure.getStructure(this::class)
+        ?.iKnowWhatImDoingReallyICanSwearButKotlinIsBlockingMeThereWasNoWayWithoutThis(this) as AbstractNBTField<T>?
 }
+

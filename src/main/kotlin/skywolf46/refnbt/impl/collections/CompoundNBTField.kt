@@ -1,6 +1,7 @@
 package skywolf46.refnbt.impl.collections
 
 import skywolf46.refnbt.abstraction.AbstractNBTField
+import skywolf46.refnbt.abstraction.AbstractNBTStructure
 import skywolf46.refnbt.abstraction.asNBT
 import skywolf46.refnbt.util.BukkitVersionUtil
 
@@ -12,6 +13,13 @@ class CompoundNBTField : AbstractNBTField<MutableMap<*, *>> {
 
         init {
             CONTENT_FIELD.isAccessible = true
+        }
+
+        fun from(vararg data: Pair<String, Any>): CompoundNBTField {
+            val nbt = CompoundNBTField()
+            for (x in data)
+                nbt[x.first] = x.second
+            return nbt
         }
     }
 
@@ -30,6 +38,7 @@ class CompoundNBTField : AbstractNBTField<MutableMap<*, *>> {
         original = CONTENT_FIELD.get(nbt) as MutableMap<String, Any>
     }
 
+
     override fun getAppliedClass(): Class<MutableMap<*, *>> {
         val java = MutableMap::class.java
         return java
@@ -45,7 +54,7 @@ class CompoundNBTField : AbstractNBTField<MutableMap<*, *>> {
         original.remove(key)
     }
 
-    fun set(key: String, field: Any) {
+    operator fun set(key: String, field: Any) {
         original[key] = field.asNBT()?.toNBTBase() as Any
     }
 
@@ -53,8 +62,13 @@ class CompoundNBTField : AbstractNBTField<MutableMap<*, *>> {
         original[key] = field.toNBTBase()
     }
 
-    fun <T> get(key: String): T? {
-        return original[key]?.let { fromNBT(it) }?.get() as T?
+    inline operator fun <reified T : Any> get(key: String): T? {
+        if (key !in original)
+            return null
+        with(AbstractNBTStructure.getStructure(T::class)) {
+            return this?.fromNBTData(fromNBT(original[key]!!)!!)
+                ?: original[key]?.let { fromNBT(it) }?.get() as T?
+        }
     }
 
     fun has(key: String): Boolean {
