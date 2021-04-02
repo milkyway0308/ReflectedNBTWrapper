@@ -17,7 +17,7 @@ object ItemNBTUtil {
     }
 
     fun getOrCreateNBT(item: ItemStack): CompoundNBTField {
-        val handle = HANDLE_FIELD.get(item)
+        val handle = HANDLE_FIELD.get(item) ?: return CompoundNBTField()
         var tag = TAG_METHOD.invoke(handle)
         (tag == null){
             val comp = CompoundNBTField()

@@ -62,7 +62,7 @@ abstract class AbstractNBTField<out T : Any> {
 }
 
 fun <T : Any> T.asNBT(): AbstractNBTField<T>? {
-    val data = AbstractNBTField.getByClass<T>(this::class.java, this)
+    val data = AbstractNBTField.getByClass<T>(this::class.javaPrimitiveType ?: this::class.java, this)
     if (data != null)
         return data.fromObject(this)
     return AbstractNBTStructure.getStructure(this::class)
