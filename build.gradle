@@ -45,10 +45,6 @@ test {
     useJUnitPlatform()
 }
 
-jar {
-
-    finalizedBy('reobfJar')
-}
 
 
 processResources {
