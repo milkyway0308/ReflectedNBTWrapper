@@ -18,7 +18,8 @@ class FloatNBTField(var data: Float) : AbstractNBTField<Float>() {
             NBT_CLASS = BukkitVersionUtil.getNMSClass("NBTTagFloat")
             CONTENT_FIELD = NBT_CLASS.getDeclaredField("data")
             CONTENT_FIELD.isAccessible = true
-            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(Float::class.javaPrimitiveType)
+            NBT_CONSTRUCTOR = NBT_CLASS.getDeclaredConstructor(Float::class.javaPrimitiveType)
+            NBT_CONSTRUCTOR.isAccessible = true
         }
     }
 

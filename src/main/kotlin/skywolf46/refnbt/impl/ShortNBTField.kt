@@ -18,7 +18,8 @@ class ShortNBTField(var data: Short) : AbstractNBTField<Short>() {
             NBT_CLASS = BukkitVersionUtil.getNMSClass("NBTTagShort")
             CONTENT_FIELD = NBT_CLASS.getDeclaredField("data")
             CONTENT_FIELD.isAccessible = true
-            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(Short::class.javaPrimitiveType)
+            NBT_CONSTRUCTOR = NBT_CLASS.getDeclaredConstructor(Short::class.javaPrimitiveType)
+            NBT_CONSTRUCTOR.isAccessible = true
         }
     }
 

@@ -23,7 +23,8 @@ class LongArrayNBTField(var data: LongArray) : AbstractNBTField<LongArray>() {
             }
 
             CONTENT_FIELD?.isAccessible = true
-            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(LongArray::class.java)
+            NBT_CONSTRUCTOR = NBT_CLASS.getDeclaredConstructor(LongArray::class.java)
+            NBT_CONSTRUCTOR.isAccessible = true
         }
     }
 

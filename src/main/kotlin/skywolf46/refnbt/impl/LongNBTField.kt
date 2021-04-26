@@ -18,7 +18,8 @@ class LongNBTField(var data: Long) : AbstractNBTField<Long>() {
             NBT_CLASS = BukkitVersionUtil.getNMSClass("NBTTagLong")
             CONTENT_FIELD = NBT_CLASS.getDeclaredField("data")
             CONTENT_FIELD.isAccessible = true
-            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(Long::class.javaPrimitiveType)
+            NBT_CONSTRUCTOR = NBT_CLASS.getDeclaredConstructor(Long::class.javaPrimitiveType)
+            NBT_CONSTRUCTOR.isAccessible = true
         }
     }
 

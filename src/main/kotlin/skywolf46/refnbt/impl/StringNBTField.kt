@@ -18,7 +18,8 @@ class StringNBTField(var data: String) : AbstractNBTField<String>() {
             NBT_CLASS = BukkitVersionUtil.getNMSClass("NBTTagString")
             CONTENT_FIELD = NBT_CLASS.getDeclaredField("data")
             CONTENT_FIELD.isAccessible = true
-            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(String::class.java)
+            NBT_CONSTRUCTOR = NBT_CLASS.getDeclaredConstructor(String::class.java)
+            NBT_CONSTRUCTOR.isAccessible = true
         }
     }
 

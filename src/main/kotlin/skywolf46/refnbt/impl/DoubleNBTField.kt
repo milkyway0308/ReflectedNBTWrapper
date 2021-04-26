@@ -18,7 +18,8 @@ class DoubleNBTField(var data: Double) : AbstractNBTField<Double>() {
             NBT_CLASS = BukkitVersionUtil.getNMSClass("NBTTagDouble")
             CONTENT_FIELD = NBT_CLASS.getDeclaredField("data")
             CONTENT_FIELD.isAccessible = true
-            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(Double::class.javaPrimitiveType)
+            NBT_CONSTRUCTOR = NBT_CLASS.getDeclaredConstructor(Double::class.javaPrimitiveType)
+            NBT_CONSTRUCTOR.isAccessible = true
         }
     }
 

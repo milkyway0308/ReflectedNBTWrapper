@@ -6,28 +6,25 @@ import skywolf46.refnbt.impl.collections.CompoundNBTField
 import skywolf46.refnbt.util.BukkitVersionUtil
 
 object ItemNBTUtil {
-    private var errorNoticed = false
+    private var legacyMode = false
     private val ITEM_CLASS = BukkitVersionUtil.getOBCClass("inventory.CraftItemStack")
+    private val ITEM_CLASS_CONSTRUCTOR = ITEM_CLASS.getDeclaredConstructor(ItemStack::class.java)
 
     private val HANDLE_FIELD = ITEM_CLASS.getDeclaredField("handle")
     private val SET_TAG_METHOD =
         BukkitVersionUtil.getNMSClass("ItemStack").getMethod("setTag", BukkitVersionUtil.getNMSClass("NBTTagCompound"))
     private val TAG_METHOD = BukkitVersionUtil.getNMSClass("ItemStack").getMethod("getTag")
-    private val ITEM_CONSTRUCTOR = BukkitVersionUtil.getNMSClass("ItemStack").getConstructor(
-        BukkitVersionUtil.getNMSClass("Item"),
-        Int::class.javaPrimitiveType,
-        Int::class.javaPrimitiveType,
-        Boolean::class.javaPrimitiveType
-    )
-
 
     init {
         HANDLE_FIELD.isAccessible = true
+        ITEM_CLASS_CONSTRUCTOR.isAccessible = true
     }
 
     fun getOrCreateNBT(item: ItemStack): CompoundNBTField {
+        // test
         val handle =
-            HANDLE_FIELD.get(item) ?: return CompoundNBTField()
+            HANDLE_FIELD.get(if (!ITEM_CLASS.isAssignableFrom(item.javaClass)) ITEM_CLASS_CONSTRUCTOR.newInstance(item) else item)
+                ?: return CompoundNBTField()
 
         var tag = TAG_METHOD.invoke(handle)
         (tag == null){
@@ -38,6 +35,11 @@ object ItemNBTUtil {
             }
         }
         return CompoundNBTField(tag)
+    }
+
+    fun enableLegacy() {
+        legacyMode = true
+
     }
 }
 

@@ -18,7 +18,8 @@ class ByteNBTField(var data: Byte) : AbstractNBTField<Byte>() {
             NBT_CLASS = BukkitVersionUtil.getNMSClass("NBTTagByte")
             CONTENT_FIELD = NBT_CLASS.getDeclaredField("data")
             CONTENT_FIELD.isAccessible = true
-            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(Byte::class.javaPrimitiveType)
+            NBT_CONSTRUCTOR = NBT_CLASS.getDeclaredConstructor(Byte::class.javaPrimitiveType)
+            NBT_CONSTRUCTOR.isAccessible = true
         }
     }
 

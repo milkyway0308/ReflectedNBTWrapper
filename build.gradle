@@ -5,6 +5,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:6.1.0'
+
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.+', changing: true
     }
 }
@@ -15,7 +17,7 @@ plugins {
     id 'java'
 }
 apply plugin: 'net.minecraftforge.gradle'
-
+apply plugin: 'com.github.johnrengelman.shadow'
 
 repositories {
     mavenCentral()
@@ -30,9 +32,12 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2855'
+    minecraft('net.minecraftforge:forge:1.12.2-14.23.5.2855') {
+        setTransitive(false)
+    }
     compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.12.2'
     compileOnly group: 'skywolf46', name: 'exutil', version: 'latest.release'
+    testCompileOnly group: 'skywolf46', name: 'exutil', version: 'latest.release'
 
 }
 
@@ -45,16 +50,19 @@ jar {
     finalizedBy('reobfJar')
 }
 
+
 processResources {
     filesMatching(["loaderDeclaration.properties", "plugin.yml"]*.toString()) {
         expand(["version": rootProject.properties["version"] as String])
     }
+    outputs.upToDateWhen { false }
 }
 compileKotlin {
     kotlinOptions {
         jvmTarget = "1.8"
     }
 }
+
 
 publishing {
     repositories {
@@ -69,14 +77,17 @@ publishing {
     }
     publications {
         create("jar", MavenPublication) {
+
             groupId 'skywolf46'
             artifactId "refnbt"
             version rootProject.properties['version'] as String
             from components.java
+            pom.withXml { xml ->
+                asNode().remove(asNode().getAt("dependencies"))
+            }
         }
     }
 }
-
 minecraft {
     // The mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   Snapshot are built nightly.

@@ -34,6 +34,7 @@ abstract class AbstractNBTField<out T : Any> {
 
         fun check() {
 //            log("§e[ReflectedNBTWrapper] Init..")
+            BukkitVersionUtil.checkLegacy()
         }
 
         init {

@@ -18,7 +18,8 @@ class IntegerArrayNBTField(var data: IntArray) : AbstractNBTField<IntArray>() {
             NBT_CLASS = BukkitVersionUtil.getNMSClass("NBTTagIntArray")
             CONTENT_FIELD = NBT_CLASS.getDeclaredField("data")
             CONTENT_FIELD.isAccessible = true
-            NBT_CONSTRUCTOR = NBT_CLASS.getConstructor(IntArray::class.java)
+            NBT_CONSTRUCTOR = NBT_CLASS.getDeclaredConstructor(IntArray::class.java)
+            NBT_CONSTRUCTOR.isAccessible = true
         }
     }
 
