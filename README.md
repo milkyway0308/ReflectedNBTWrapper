@@ -1,4 +1,4 @@
-# **ReflectedNBTWrapper** [![](https://jitci.com/gh/milkyway0308/ReflectedNBTWrapper/svg)](https://jitci.com/gh/milkyway0308/ReflectedNBTWrapper)
+# **ReflectedNBTWrapper** [![](https://jitci.com/gh/milkyway0308/ReflectedNBTWrapper/svg)](https://jitci.com/gh/milkyway0308/ReflectedNBTWrapper) ![Java CI](https://github.com/milkyway0308/ReflectedNBTWrapper/workflows/Java%20CI/badge.svg)
 
 ReflectedNBTWrapper is NBT class wrapper using reflection for plugin version support.
 
