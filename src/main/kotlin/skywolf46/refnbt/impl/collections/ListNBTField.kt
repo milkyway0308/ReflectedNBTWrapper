@@ -103,11 +103,8 @@ class ListNBTField : AbstractNBTField<List<*>> {
         val cacheHash = any.hashCode()
         for (data in 0 until original.size) {
             val orig = fromNBT(original[data])
-            if (orig == any)
+            if (orig.hashCode() == cacheHash && orig == any) {
                 return data
-            if (orig.hashCode() == cacheHash) {
-                if (orig == any)
-                    return data
             }
         }
         return -1

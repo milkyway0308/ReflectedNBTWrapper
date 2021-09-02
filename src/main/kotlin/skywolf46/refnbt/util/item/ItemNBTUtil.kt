@@ -1,8 +1,8 @@
 package skywolf46.refnbt.util.item
 
 import org.bukkit.inventory.ItemStack
-import skywolf46.extrautility.util.invoke
-import skywolf46.refnbt.impl.collections.CompoundNBTField
+import org.bukkit.inventory.meta.ItemMeta
+import skywolf46.refnbt.data.ItemMetaNBT
 import skywolf46.refnbt.util.BukkitVersionUtil
 
 object ItemNBTUtil {
@@ -11,38 +11,28 @@ object ItemNBTUtil {
     private val ITEM_CLASS_CONSTRUCTOR = ITEM_CLASS.getDeclaredConstructor(ItemStack::class.java)
 
     private val HANDLE_FIELD = ITEM_CLASS.getDeclaredField("handle")
-    private val SET_TAG_METHOD =
-        BukkitVersionUtil.getNMSClass("ItemStack").getMethod("setTag", BukkitVersionUtil.getNMSClass("NBTTagCompound"))
-    private val TAG_METHOD = BukkitVersionUtil.getNMSClass("ItemStack").getMethod("getTag")
+
+    //    private val SET_TAG_METHOD =
+//        BukkitVersionUtil.getNMSClass("ItemStack").getMethod("setTag", BukkitVersionUtil.getNMSClass("NBTTagCompound"))
+    private val TAG_METHOD = BukkitVersionUtil.getNMSClass("ItemStack").getDeclaredField("tag").apply {
+        isAccessible = true
+    }
 
     init {
         HANDLE_FIELD.isAccessible = true
         ITEM_CLASS_CONSTRUCTOR.isAccessible = true
     }
 
-    fun getOrCreateNBT(item: ItemStack): CompoundNBTField {
-        // test
-        val handle =
-            HANDLE_FIELD.get(if (!ITEM_CLASS.isAssignableFrom(item.javaClass)) ITEM_CLASS_CONSTRUCTOR.newInstance(item) else item)
-                ?: return CompoundNBTField()
-
-        var tag = TAG_METHOD.invoke(handle)
-        (tag == null){
-            val comp = CompoundNBTField()
-            with(comp.toNBTBase()) {
-                SET_TAG_METHOD.invoke(handle, this)
-                tag = this
-            }
-        }
-        return CompoundNBTField(tag)
+    fun getOrCreateNBT(item: ItemMeta): ItemMetaNBT {
+        return ItemMetaNBT(item)
     }
+
 
     fun enableLegacy() {
         legacyMode = true
-
     }
 }
 
-fun ItemStack.getTag(): CompoundNBTField {
+fun ItemMeta.getTag(): ItemMetaNBT {
     return ItemNBTUtil.getOrCreateNBT(this)
 }

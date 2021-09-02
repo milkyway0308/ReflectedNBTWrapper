@@ -33,7 +33,6 @@ abstract class AbstractNBTField<out T : Any> {
         fun fromNBT(any: Any) = registryNBT[any::class.java]?.fromNBTBase(any)
 
         fun check() {
-//            log("§e[ReflectedNBTWrapper] Init..")
             BukkitVersionUtil.checkLegacy()
         }
 

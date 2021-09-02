@@ -5,8 +5,6 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:6.1.0'
-
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.+', changing: true
     }
 }
@@ -15,9 +13,8 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.4.32'
     id 'maven-publish'
     id 'java'
+    id 'jacoco'
 }
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'com.github.johnrengelman.shadow'
 
 repositories {
     mavenCentral()
@@ -32,10 +29,9 @@ repositories {
 }
 
 dependencies {
-    minecraft('net.minecraftforge:forge:1.12.2-14.23.5.2855') {
-        setTransitive(false)
-    }
-    compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.12.2'
+//    compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.12.2'
+    compileOnly("skywolf46:exutil:1.61.7")
+    compileOnly(files("O:\\Servers\\주문제작\\아이리스\\cache\\patched_1.12.2.jar"))
     compileOnly group: 'skywolf46', name: 'exutil', version: 'latest.release'
     testCompileOnly group: 'skywolf46', name: 'exutil', version: 'latest.release'
 
@@ -45,7 +41,17 @@ test {
     useJUnitPlatform()
 }
 
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+}
 
+jacoco {
+    toolVersion = "0.8.6"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
 
 processResources {
     filesMatching(["loaderDeclaration.properties", "plugin.yml"]*.toString()) {
@@ -80,47 +86,6 @@ publishing {
             from components.java
             pom.withXml { xml ->
                 asNode().remove(asNode().getAt("dependencies"))
-            }
-        }
-    }
-}
-minecraft {
-    // The mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   Snapshot are built nightly.
-    // stable_#            Stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not always work.
-    // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'stable', version: '39-1.12'
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
-
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-
-    // Default run configurations.
-    // These can be tweaked, removed, or duplicated as needed.
-    runs {
-        client {
-            workingDirectory project.file('run')
-
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
-        }
-
-        server {
-            workingDirectory project.file('run')
-
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                MESTAPI {
-                    source sourceSets.main
-                }
             }
         }
     }

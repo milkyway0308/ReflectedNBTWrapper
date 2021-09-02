@@ -23,7 +23,7 @@ class IntegerNBTField(var data: Int) : AbstractNBTField<Int>() {
         }
     }
 
-    override fun getAppliedClass(): Class<Int> = Int::class.javaPrimitiveType!!
+    override fun getAppliedClass(): Class<Int> = Int::class.java
 
     override fun toNBTBase(): Any = NBT_CONSTRUCTOR.newInstance(data)
     override fun getNBTClass(): Class<*> = NBT_CLASS

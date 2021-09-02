@@ -56,7 +56,7 @@ class CompoundNBTField : AbstractNBTField<MutableMap<*, *>> {
 
     operator fun set(key: String, field: Any) {
         original[key] = field.asNBT()?.toNBTBase() as Any
-    }
+     }
 
     fun setNBT(key: String, field: AbstractNBTField<*>) {
         original[key] = field.toNBTBase()
